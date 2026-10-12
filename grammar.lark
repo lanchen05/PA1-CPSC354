@@ -1,0 +1,22 @@
+?start: exp
+
+?exp: exp "+" term    -> add
+    | exp "-" term    -> sub
+    | term
+
+?term: term "*" factor -> mul
+     | factor
+
+?factor: "-" factor              -> neg
+       | "log" exp "base" factor -> log
+       | power
+
+?power: atom "^" factor -> pow
+      | atom
+
+?atom: NUMBER -> number
+     | "(" exp ")"
+
+%import common.NUMBER
+%import common.WS
+%ignore WS
